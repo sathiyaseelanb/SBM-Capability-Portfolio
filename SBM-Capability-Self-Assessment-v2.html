@@ -592,12 +592,12 @@
     <div class="welcome-card">
       <div class="num">03</div>
       <div class="ti">Specialization (T4\u2013T6)</div>
-      <div class="de">From Trimester 4, I go deep on the 12&ndash;13 sub-capabilities of my chosen specialization.</div>
+      <div class="de">From Trimester 4, you are expected to go deep on the 12&ndash;13 sub-capabilities of your chosen specialization.</div>
     </div>
     <div class="welcome-card">
       <div class="num">04</div>
       <div class="ti">Tracked over time</div>
-      <div class="de">I export my history as a file and re-import it each trimester. My report shows me how I've moved over time.</div>
+      <div class="de">You can export your history as a file and re-import it each trimester. Your report shows me how you have moved over time.</div>
     </div>
   </div>
 
@@ -637,7 +637,7 @@
         <option value="operations">Lean Operations &amp; Systems</option>
         <option value="ib">International Business</option>
       </select>
-      <div class="form-help">From Trimester 4 onward, I will deeply assess myself on the specialization I am formally enrolled in.</div>
+      <div class="form-help">From Trimester 4 onward, you will assess yourself on the specialization you have formally enrolled in.</div>
     </div>
   </div>
 
@@ -662,7 +662,7 @@
 <section class="screen" id="screen-results">
   <div class="results-header">
     <div class="results-eyebrow" id="resultsEyebrow">My Capability Portfolio &middot; Self-Assessment</div>
-    <h1 class="results-title">Where I <em>stand</em>, and where I go from here.</h1>
+    <h1 class="results-title">Where I <em>stand</em>, and where I need to go from here.</h1>
     <div class="results-meta">
       <span>Name<strong id="resName">&mdash;</strong></span>
       <span>Trimester<strong id="resTrim">&mdash;</strong></span>
@@ -674,19 +674,19 @@
 
   <div class="results-grid">
     <div class="radar-container">
-      <div class="radar-label">My capability radar &mdash; this trimester</div>
+      <div class="radar-label">Your capability radar &mdash; this trimester</div>
       <svg class="radar-svg" id="radarSvg" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
     <div>
-      <div class="radar-label" style="margin-bottom: 16px;">My domain scores &mdash; out of 5</div>
+      <div class="radar-label" style="margin-bottom: 16px;">Your domain scores &mdash; out of 5</div>
       <div class="scores-list" id="scoresList"></div>
     </div>
   </div>
 
   <!-- LONGITUDINAL -->
   <div class="longitudinal-section" id="longSection">
-    <h2>How I have moved over time</h2>
-    <p class="subhead">Each line traces my self-rating in one core domain across every trimester I have completed an assessment. Movement matters more than the absolute number &mdash; especially in the early trimesters.</p>
+    <h2>How you have moved over time</h2>
+    <p class="subhead">Each line traces your self-rating in one core domain across every trimester you have completed an assessment. Movement matters more than the absolute number &mdash; especially in the early trimesters.</p>
     <div id="longContent"></div>
   </div>
 
@@ -694,24 +694,24 @@
   <div class="insights-section">
     <div class="insights-header">
       <h2>What this tells me</h2>
-      <p>My self-assessment is a starting point, not a verdict. I read my strengths first &mdash; I build from there. I read my gaps with patience; they are my agenda for the next trimester.</p>
+      <p>Your self-assessment is a starting point, not a verdict. You must read your strengths first &mdash; build from there. Read the gaps with patience; they are your agenda for the next trimester.</p>
     </div>
 
     <div class="insight-block strength">
-      <div class="insight-label">My strongest signals</div>
+      <div class="insight-label">Your strongest signals</div>
       <h3 id="strengthsTitle"></h3>
       <ul id="strengthsList"></ul>
     </div>
 
     <div class="insight-block gap">
-      <div class="insight-label">My honest gaps</div>
+      <div class="insight-label">Gaps you must address</div>
       <h3 id="gapsTitle"></h3>
       <ul id="gapsList"></ul>
     </div>
 
     <div class="insight-block next">
-      <div class="insight-label">Where I take this next</div>
-      <h3>Four concrete moves for my next trimester</h3>
+      <div class="insight-label">Where do you take this next</div>
+      <h3>Four concrete moves for your next trimester</h3>
       <div class="next-steps-grid" id="nextSteps"></div>
     </div>
   </div>
@@ -757,11 +757,11 @@ const CORE_DOMAINS = [
     name: "Business Acumen",
     intent: "I see the enterprise as a system, not a syllabus. I read financials, industry, customer, and strategy as one connected picture.",
     items: [
-      { id: "acu1", name: "Financial literacy of the business", behaviour: "I read P&L, balance sheet, cash flow. I connect an operating decision to its financial consequence." },
-      { id: "acu2", name: "Industry & competitive intelligence", behaviour: "I map a sector's value chain. I identify the forces actually reshaping it." },
-      { id: "acu3", name: "Customer & market sense", behaviour: "I articulate who the customer is, what they value, and what they will pay for." },
-      { id: "acu4", name: "Strategic reasoning", behaviour: "I frame a strategic question and structure it for decision." },
-      { id: "acu5", name: "Commercial curiosity", behaviour: "I ask why a price, margin, or launch worked the way it did. I form a view." },
+      { id: "acu1", name: "Financial literacy of the business", behaviour: "I am able to read P&L, balance sheet, cash flow, and to connect an operating decision to its financial consequence." },
+      { id: "acu2", name: "Industry & competitive intelligence", behaviour: "I am able to map a sector's value chain and identify the forces actually reshaping it." },
+      { id: "acu3", name: "Customer & market sense", behaviour: "I am able to articulate who the customer is, what they value, and what they will pay for." },
+      { id: "acu4", name: "Strategic reasoning", behaviour: "I am able to frame a strategic question and structure it for decision." },
+      { id: "acu5", name: "Commercial curiosity", behaviour: "I can ask why a price, margin, or launch worked the way it did and form a view." },
     ]
   },
   {
