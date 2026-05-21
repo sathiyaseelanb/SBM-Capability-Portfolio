@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBM Capability Portfolio · Self-Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f4efe6;
+    --cream: #ebe3d3;
+    --gold: #b08d3f;
+    --gold-soft: #d4b772;
+    --gold-bright: #e0c47f;
+    --red: #c14a3a;
+    --green: #4a7c3a;
+    --navy: #1f2a44;
+    --navy-deep: #131a2c;
+    --muted: #6b6357;
+    --border: #d9d2c2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(176, 141, 63, 0.15); z-index: 100; }
+  .progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+  .topbar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 16px; }
+  .brand-mark {
+    width: 32px; height: 32px;
+    background: var(--gold);
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.05em;
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+  .brand-text .small {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+    color: var(--gold-soft); text-transform: uppercase; letter-spacing: 0.2em;
+  }
+  .brand-text .big {
+    font-family: 'Fraunces', serif; font-size: 0.95rem;
+    color: var(--paper); letter-spacing: -0.01em;
+  }
+  .topbar-actions { display: flex; gap: 12px; align-items: center; }
+  .topbar-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--gold-soft); letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .topbar-btn {
+    background: transparent; border: 1px solid var(--gold); color: var(--gold-soft);
+    padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .topbar-btn:hover { background: var(--gold); color: var(--ink); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 48px 32px 80px; position: relative; z-index: 2; }
+
+  .screen { display: none; animation: fadeIn 0.5s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* WELCOME */
+  .welcome-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.3em;
+    margin-bottom: 24px; display: flex; align-items: center; gap: 14px;
+  }
+  .welcome-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+  .welcome-title {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.0; letter-spacing: -0.025em; color: var(--ink);
+    margin-bottom: 24px; max-width: 900px;
+  }
+  .welcome-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .welcome-lede {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+    line-height: 1.5; color: var(--muted);
+    max-width: 720px; margin-bottom: 48px;
+  }
+
+  .welcome-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    margin-bottom: 56px;
+  }
+  .welcome-card { background: var(--paper); padding: 28px 24px; }
+  .welcome-card .num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 8px; }
+  .welcome-card .ti { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 6px; }
+  .welcome-card .de { font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+
+  .form-label {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .form-input, .form-select {
+    width: 100%; padding: 14px 18px; background: var(--paper);
+    border: 1px solid var(--border); font-family: 'Inter Tight', sans-serif;
+    font-size: 1rem; color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold); background: #fdf9ee; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+  .form-row.single { grid-template-columns: 1fr; }
+  @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+  .form-help { font-size: 0.82rem; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+  .trimester-info {
+    background: var(--cream); border-left: 4px solid var(--gold);
+    padding: 18px 22px; margin-bottom: 24px;
+    font-size: 0.95rem; color: var(--ink); line-height: 1.55;
+  }
+  .trimester-info strong { color: var(--navy); font-weight: 600; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 16px 32px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.18em;
+    font-weight: 500; cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn::after { content: '→'; font-family: 'Inter Tight'; font-size: 1rem; transition: transform 0.3s; }
+  .btn:hover { background: var(--gold); color: var(--ink); }
+  .btn:hover::after { transform: translateX(4px); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn:disabled:hover { background: var(--ink); color: var(--paper); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn-secondary::after { content: '←'; }
+  .btn-secondary:hover::after { transform: translateX(-4px); }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+  .btn-ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .btn-ghost::after { display: none; }
+  .btn-ghost:hover { background: var(--gold); color: var(--ink); }
+
+  /* ASSESSMENT */
+  .assess-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  }
+  .assess-domain-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.25em;
+    margin-bottom: 8px;
+  }
+  .assess-domain-title {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--navy); line-height: 1.1; letter-spacing: -0.02em;
+    max-width: 700px;
+  }
+  .assess-domain-title em { font-style: italic; color: var(--gold); }
+  .assess-counter {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: var(--muted); letter-spacing: 0.15em;
+    text-align: right; line-height: 1.5;
+  }
+  .assess-counter strong {
+    display: block; font-family: 'Fraunces', serif; font-size: 1.8rem;
+    color: var(--ink); font-weight: 400; letter-spacing: -0.02em;
+  }
+  .assess-intent {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 1.15rem;
+    color: var(--muted); margin-bottom: 40px; line-height: 1.55;
+    max-width: 760px;
+  }
+
+  .cap-card {
+    background: #faf6ec; border: 1px solid var(--border);
+    margin-bottom: 24px; padding: 28px 32px;
+    position: relative; transition: background 0.25s;
+  }
+  .cap-card.answered { background: #fbf3df; border-left: 3px solid var(--gold); }
+  .cap-card-tag {
+    position: absolute; top: 16px; right: 24px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .cap-title {
+    font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--navy);
+    margin-bottom: 8px; font-weight: 500; letter-spacing: -0.01em;
+    padding-right: 80px;
+  }
+  .cap-behaviours {
+    font-size: 0.93rem; color: var(--muted); margin-bottom: 24px;
+    font-style: italic; line-height: 1.55;
+  }
+
+  .likert {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px;
+  }
+  .likert-option {
+    background: var(--paper); border: 1px solid var(--border);
+    padding: 14px 10px; cursor: pointer; text-align: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .likert-option:hover { border-color: var(--gold); background: #fdf9ee; transform: translateY(-2px); }
+  .likert-option.selected { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .likert-option.selected .likert-num { color: var(--gold-bright); }
+  .likert-option.selected .likert-label { color: var(--paper); }
+  .likert-num {
+    font-family: 'Fraunces', serif; font-size: 1.6rem;
+    color: var(--gold); line-height: 1; margin-bottom: 6px; font-weight: 400;
+  }
+  .likert-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 600px) {
+    .likert { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .likert-option { padding: 10px 4px; }
+    .likert-num { font-size: 1.2rem; }
+    .likert-label { font-size: 0.55rem; letter-spacing: 0.05em; }
+  }
+
+  .reflect-toggle {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.18em;
+    background: none; border: none; cursor: pointer; padding: 4px 0;
+    transition: color 0.2s;
+  }
+  .reflect-toggle:hover { color: var(--ink); }
+  .reflect-area { display: none; margin-top: 16px; }
+  .reflect-area.show { display: block; animation: fadeIn 0.3s ease; }
+  .reflect-area textarea {
+    width: 100%; min-height: 90px; padding: 14px 16px;
+    background: var(--paper); border: 1px solid var(--border);
+    font-family: 'Inter Tight', sans-serif; font-size: 0.95rem;
+    line-height: 1.55; color: var(--ink); resize: vertical;
+  }
+  .reflect-area textarea:focus { outline: none; border-color: var(--gold); background: #fdf9ee; }
+  .reflect-prompt { font-size: 0.82rem; color: var(--muted); margin-bottom: 8px; font-style: italic; }
+
+  .nav-buttons {
+    display: flex; justify-content: space-between;
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
+  }
+
+  .domain-intro {
+    background: var(--navy); color: var(--paper); padding: 32px 36px;
+    margin-bottom: 32px; position: relative; overflow: hidden;
+  }
+  .domain-intro::before {
+    content: ''; position: absolute; top: -20px; right: -20px;
+    width: 140px; height: 140px; border: 1px solid rgba(212, 183, 114, 0.15);
+    transform: rotate(15deg);
+  }
+  .domain-intro-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--gold-soft); text-transform: uppercase; letter-spacing: 0.25em;
+    margin-bottom: 12px;
+  }
+  .domain-intro-title {
+    font-family: 'Fraunces', serif; font-size: 2rem; line-height: 1.1;
+    margin-bottom: 12px; font-weight: 400;
+  }
+  .domain-intro-title em { color: var(--gold-soft); font-style: italic; }
+  .domain-intro-desc {
+    color: rgba(244, 239, 230, 0.75); font-size: 1rem;
+    max-width: 700px; line-height: 1.55;
+  }
+
+  /* RESULTS */
+  .results-header {
+    margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+  }
+  .results-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.3em;
+    margin-bottom: 16px;
+  }
+  .results-title {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.05;
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .results-title em { font-style: italic; color: var(--gold); }
+  .results-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em;
+    display: flex; gap: 28px; flex-wrap: wrap; margin-top: 16px;
+  }
+  .results-meta span strong {
+    display: block; color: var(--ink);
+    font-family: 'Fraunces', serif; font-size: 1.05rem;
+    letter-spacing: 0; text-transform: none; font-weight: 400; margin-top: 4px;
+  }
+
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .results-grid { grid-template-columns: 1fr; } }
+
+  .radar-container { background: var(--cream); padding: 24px; border: 1px solid var(--border); }
+  .radar-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .radar-svg { display: block; width: 100%; height: auto; }
+
+  .scores-list { display: flex; flex-direction: column; gap: 16px; }
+  .score-row {
+    background: var(--cream); border-left: 4px solid var(--gold);
+    padding: 18px 22px; display: grid;
+    grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+  }
+  .score-row.weak { border-left-color: var(--red); }
+  .score-row.strong { border-left-color: var(--green); }
+  .score-name {
+    font-family: 'Fraunces', serif; font-size: 1.05rem;
+    color: var(--navy); margin-bottom: 4px; font-weight: 500;
+  }
+  .score-bar-track {
+    background: rgba(10, 10, 10, 0.08); height: 6px;
+    border-radius: 3px; overflow: hidden; margin-top: 8px;
+  }
+  .score-bar-fill {
+    height: 100%; background: var(--gold); border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .score-row.weak .score-bar-fill { background: var(--red); }
+  .score-row.strong .score-bar-fill { background: var(--green); }
+  .score-value {
+    font-family: 'Fraunces', serif; font-size: 2.2rem;
+    color: var(--ink); font-weight: 300; line-height: 1; letter-spacing: -0.03em;
+  }
+  .score-value .total { font-size: 0.9rem; color: var(--muted); }
+  .score-delta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    margin-top: 6px; letter-spacing: 0.1em; font-weight: 600;
+  }
+  .score-delta.up { color: var(--green); }
+  .score-delta.down { color: var(--red); }
+  .score-delta.same { color: var(--muted); }
+
+  /* LONGITUDINAL */
+  .longitudinal-section {
+    margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .longitudinal-section h2 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: 8px;
+  }
+  .longitudinal-section .subhead {
+    color: var(--muted); font-size: 1rem; max-width: 680px; margin-bottom: 32px;
+  }
+  .timeline-chart {
+    background: var(--cream); padding: 32px 28px;
+    border: 1px solid var(--border);
+  }
+  .timeline-chart-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .timeline-svg { display: block; width: 100%; height: auto; }
+  .timeline-legend {
+    display: flex; flex-wrap: wrap; gap: 12px 24px;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px dashed var(--border);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--muted); letter-spacing: 0.05em;
+  }
+  .legend-swatch { width: 14px; height: 4px; border-radius: 2px; }
+
+  .history-table {
+    margin-top: 32px; background: var(--paper);
+    border: 1px solid var(--border); overflow-x: auto;
+  }
+  .history-table table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .history-table th {
+    background: var(--navy); color: var(--paper);
+    padding: 12px 14px; text-align: left;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500;
+  }
+  .history-table td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--ink);
+  }
+  .history-table tr:last-child td { border-bottom: none; }
+  .history-table .domain-cell {
+    font-family: 'Fraunces', serif; font-weight: 500; color: var(--navy);
+  }
+  .history-table .score-cell {
+    font-family: 'JetBrains Mono', monospace; font-weight: 600;
+    text-align: center;
+  }
+
+  .empty-history {
+    background: var(--cream); padding: 32px;
+    border: 1px dashed var(--border); text-align: center;
+    color: var(--muted); font-style: italic;
+  }
+
+  /* INSIGHTS */
+  .insights-section {
+    margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .insights-header { margin-bottom: 32px; }
+  .insights-header h2 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: 8px;
+  }
+  .insights-header p { color: var(--muted); font-size: 1rem; max-width: 680px; }
+  .insight-block {
+    background: var(--paper); border: 1px solid var(--border);
+    padding: 28px 32px; margin-bottom: 16px;
+  }
+  .insight-block.strength { border-left: 4px solid var(--green); }
+  .insight-block.gap { border-left: 4px solid var(--red); }
+  .insight-block.next { border-left: 4px solid var(--gold); }
+  .insight-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 12px;
+  }
+  .insight-block.strength .insight-label { color: var(--green); }
+  .insight-block.gap .insight-label { color: var(--red); }
+  .insight-block.next .insight-label { color: var(--gold); }
+  .insight-block h3 {
+    font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--navy);
+    margin-bottom: 12px; font-weight: 500; line-height: 1.2;
+  }
+  .insight-block p, .insight-block li {
+    color: var(--ink); font-size: 0.98rem; line-height: 1.65;
+  }
+  .insight-block ul { list-style: none; padding: 0; }
+  .insight-block li {
+    padding: 8px 0 8px 24px; position: relative; border-bottom: 1px solid var(--border);
+  }
+  .insight-block li:last-child { border-bottom: none; }
+  .insight-block li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--gold); font-weight: 700;
+  }
+  .insight-block li strong { color: var(--navy); }
+
+  .next-steps-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 20px;
+  }
+  .step-card {
+    background: var(--cream); padding: 20px 22px;
+    border-top: 3px solid var(--gold);
+  }
+  .step-card .step-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .step-card .step-title {
+    font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--navy);
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .step-card .step-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
+
+  .results-actions {
+    margin-top: 48px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap;
+  }
+  .actions-left, .actions-right { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .footer {
+    background: var(--ink); color: var(--paper);
+    padding: 40px 32px; margin-top: 80px; text-align: center;
+  }
+  .footer-mark {
+    font-family: 'Fraunces', serif; font-style: italic;
+    color: var(--gold-soft); font-size: 1rem; margin-bottom: 6px;
+  }
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: rgba(212, 183, 114, 0.4); text-transform: uppercase; letter-spacing: 0.2em;
+  }
+
+  /* MODALS */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(10, 10, 10, 0.6); z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--paper); padding: 32px;
+    max-width: 540px; width: 100%;
+    border-top: 4px solid var(--gold);
+    animation: fadeIn 0.3s ease;
+  }
+  .modal h3 {
+    font-family: 'Fraunces', serif; font-size: 1.5rem;
+    color: var(--navy); margin-bottom: 12px;
+  }
+  .modal p {
+    color: var(--ink); margin-bottom: 16px; line-height: 1.6;
+  }
+  .modal .file-input { display: none; }
+  .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+
+  /* PRINT */
+  @media print {
+    body { background: white; color: black; }
+    body::before { display: none; }
+    .topbar, .progress-bar, .footer, .nav-buttons, .results-actions, .reflect-toggle, .btn, .topbar-btn { display: none !important; }
+    .screen { display: block !important; page-break-inside: avoid; }
+    .screen:not(.active) { display: none !important; }
+    .container { max-width: 100%; padding: 20px; }
+    .insight-block, .score-row, .radar-container, .cap-card, .timeline-chart, .history-table { page-break-inside: avoid; }
+    .results-grid { display: block; }
+    .results-grid > * { margin-bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-mark">S</div>
+    <div class="brand-text">
+      <span class="small">CHRIST · School of Business and Management</span>
+      <span class="big">Capability Portfolio · Self-Assessment</span>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button class="topbar-btn" id="topImport" title="Load previous attempts from a .json file">Import History</button>
+    <span class="topbar-meta" id="topbarMeta">v2.0 · Working Draft</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============ WELCOME ============ -->
+<section class="screen active" id="screen-welcome">
+  <div class="welcome-eyebrow">A Day-1-Ready MBA Graduate</div>
+  <h1 class="welcome-title">Where do I <em>actually</em> stand today?</h1>
+  <p class="welcome-lede">An honest, structured self-assessment across the five core capabilities every CHRIST MBA graduate should be able to demonstrate &mdash; plus my subject domain readiness, and from Trimester 4 onward, my chosen specialization.</p>
+
+  <div class="welcome-grid">
+    <div class="welcome-card">
+      <div class="num">01</div>
+      <div class="ti">Five core domains</div>
+      <div class="de">Business Acumen, Analytical Craft, Execution, Communication, Self &amp; Maturity. I assess these every trimester.</div>
+    </div>
+    <div class="welcome-card">
+      <div class="num">02</div>
+      <div class="ti">Subject domains (T1\u2013T3)</div>
+      <div class="de">In my first three trimesters, I rate my readiness across all six MBA subject domains before I commit to a specialization.</div>
+    </div>
+    <div class="welcome-card">
+      <div class="num">03</div>
+      <div class="ti">Specialization (T4\u2013T6)</div>
+      <div class="de">From Trimester 4, I go deep on the 12&ndash;13 sub-capabilities of my chosen specialization.</div>
+    </div>
+    <div class="welcome-card">
+      <div class="num">04</div>
+      <div class="ti">Tracked over time</div>
+      <div class="de">I export my history as a file and re-import it each trimester. My report shows me how I've moved over time.</div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div>
+      <label class="form-label">My name</label>
+      <input type="text" class="form-input" id="inputName" placeholder="Aarav Sharma" autocomplete="off">
+    </div>
+    <div>
+      <label class="form-label">My roll number / batch</label>
+      <input type="text" class="form-input" id="inputRoll" placeholder="MBA-2026-0142" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div>
+      <label class="form-label">My trimester right now</label>
+      <select class="form-select" id="inputTrimester">
+        <option value="">Select trimester</option>
+        <option value="1">Start of Trimester 1</option>
+        <option value="2">Start of Trimester 2</option>
+        <option value="3">Start of Trimester 3</option>
+        <option value="4">Start of Trimester 4</option>
+        <option value="5">Start of Trimester 5</option>
+        <option value="6">Start of Trimester 6</option>
+        <option value="7">End of Trimester 6 \u2014 final exit</option>
+      </select>
+    </div>
+    <div id="specWrapper" style="display: none;">
+      <label class="form-label">My specialization</label>
+      <select class="form-select" id="inputSpec">
+        <option value="">Select my specialization</option>
+        <option value="analytics">Business Analytics &amp; AI</option>
+        <option value="finance">Finance</option>
+        <option value="hr">Human Resources</option>
+        <option value="marketing">Marketing</option>
+        <option value="operations">Lean Operations &amp; Systems</option>
+        <option value="ib">International Business</option>
+      </select>
+      <div class="form-help">From Trimester 4 onward, I will deeply assess myself on the specialization I am formally enrolled in.</div>
+    </div>
+  </div>
+
+  <div id="trimesterInfo"></div>
+
+  <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div id="historyStatus" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em;"></div>
+    <button class="btn" id="btnStart" disabled>Begin Assessment</button>
+  </div>
+</section>
+
+<!-- ============ ASSESSMENT ============ -->
+<section class="screen" id="screen-assess">
+  <div id="assessContent"></div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" id="btnPrev">Previous</button>
+    <button class="btn" id="btnNext">Next Domain</button>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="screen" id="screen-results">
+  <div class="results-header">
+    <div class="results-eyebrow" id="resultsEyebrow">My Capability Portfolio &middot; Self-Assessment</div>
+    <h1 class="results-title">Where I <em>stand</em>, and where I go from here.</h1>
+    <div class="results-meta">
+      <span>Name<strong id="resName">&mdash;</strong></span>
+      <span>Trimester<strong id="resTrim">&mdash;</strong></span>
+      <span id="resSpecBlock" style="display:none;">Specialization<strong id="resSpec">&mdash;</strong></span>
+      <span>Date<strong id="resDate">&mdash;</strong></span>
+      <span>Attempts so far<strong id="resAttempts">1</strong></span>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    <div class="radar-container">
+      <div class="radar-label">My capability radar &mdash; this trimester</div>
+      <svg class="radar-svg" id="radarSvg" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <div>
+      <div class="radar-label" style="margin-bottom: 16px;">My domain scores &mdash; out of 5</div>
+      <div class="scores-list" id="scoresList"></div>
+    </div>
+  </div>
+
+  <!-- LONGITUDINAL -->
+  <div class="longitudinal-section" id="longSection">
+    <h2>How I have moved over time</h2>
+    <p class="subhead">Each line traces my self-rating in one core domain across every trimester I have completed an assessment. Movement matters more than the absolute number &mdash; especially in the early trimesters.</p>
+    <div id="longContent"></div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="insights-section">
+    <div class="insights-header">
+      <h2>What this tells me</h2>
+      <p>My self-assessment is a starting point, not a verdict. I read my strengths first &mdash; I build from there. I read my gaps with patience; they are my agenda for the next trimester.</p>
+    </div>
+
+    <div class="insight-block strength">
+      <div class="insight-label">My strongest signals</div>
+      <h3 id="strengthsTitle"></h3>
+      <ul id="strengthsList"></ul>
+    </div>
+
+    <div class="insight-block gap">
+      <div class="insight-label">My honest gaps</div>
+      <h3 id="gapsTitle"></h3>
+      <ul id="gapsList"></ul>
+    </div>
+
+    <div class="insight-block next">
+      <div class="insight-label">Where I take this next</div>
+      <h3>Four concrete moves for my next trimester</h3>
+      <div class="next-steps-grid" id="nextSteps"></div>
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <div class="actions-left">
+      <button class="btn btn-secondary" id="btnRestart">Start Over</button>
+    </div>
+    <div class="actions-right">
+      <button class="btn btn-ghost" id="btnExport">Export My History</button>
+      <button class="btn" id="btnPrint">Print / Save as PDF</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-backdrop" id="importModal">
+  <div class="modal">
+    <h3>Import my previous attempts</h3>
+    <p>I select the <code>.json</code> file I exported after my last assessment. My past trimester scores will be loaded so I can see how I've moved.</p>
+    <input type="file" class="file-input" id="fileInput" accept=".json,application/json">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="btnCancelImport">Cancel</button>
+      <button class="btn" id="btnPickFile">Choose File</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-mark">CHRIST (Deemed to be University) &middot; School of Business and Management</div>
+  <div class="footer-meta">MBA Graduate Capability Portfolio &middot; Self-Assessment v2.0 &middot; Longitudinal</div>
+</div>
+
+<script>
+// ============================================================
+// CAPABILITY DATA (with first-person framing)
+// ============================================================
+const CORE_DOMAINS = [
+  {
+    id: "acumen",
+    name: "Business Acumen",
+    intent: "I see the enterprise as a system, not a syllabus. I read financials, industry, customer, and strategy as one connected picture.",
+    items: [
+      { id: "acu1", name: "Financial literacy of the business", behaviour: "I read P&L, balance sheet, cash flow. I connect an operating decision to its financial consequence." },
+      { id: "acu2", name: "Industry & competitive intelligence", behaviour: "I map a sector's value chain. I identify the forces actually reshaping it." },
+      { id: "acu3", name: "Customer & market sense", behaviour: "I articulate who the customer is, what they value, and what they will pay for." },
+      { id: "acu4", name: "Strategic reasoning", behaviour: "I frame a strategic question and structure it for decision." },
+      { id: "acu5", name: "Commercial curiosity", behaviour: "I ask why a price, margin, or launch worked the way it did. I form a view." },
+    ]
+  },
+  {
+    id: "analytical",
+    name: "Analytical & Decision Craft",
+    intent: "I turn ambiguity into structured choices. I reason with numbers and frameworks; I defend my conclusions; I live with imperfect information.",
+    items: [
+      { id: "ana1", name: "Problem structuring", behaviour: "I decompose a vague problem into testable sub-questions." },
+      { id: "ana2", name: "Quantitative reasoning", behaviour: "I build and audit simple financial models. I estimate orders of magnitude without a spreadsheet." },
+      { id: "ana3", name: "Data fluency", behaviour: "I read tables, charts, dashboards critically. I spot when a number doesn't pass the smell test." },
+      { id: "ana4", name: "Decision making under uncertainty", behaviour: "I frame decisions as options, trade-offs, assumptions. I recommend a path without complete information." },
+      { id: "ana5", name: "Critical thinking", behaviour: "I identify unstated assumptions in arguments. I steelman positions before responding." },
+    ]
+  },
+  {
+    id: "execution",
+    name: "Execution & Delivery",
+    intent: "I translate plans into outcomes. I own the result. I manage projects, teams, and cross-functional work without being micromanaged.",
+    items: [
+      { id: "exe1", name: "Project management", behaviour: "I scope work, sequence tasks, manage to a deadline without being managed." },
+      { id: "exe2", name: "Ownership & accountability", behaviour: "I close the loop on commitments. I surface problems early with proposed solutions." },
+      { id: "exe3", name: "Working in teams", behaviour: "I play multiple team roles credibly. I manage conflict and give feedback that lands." },
+      { id: "exe4", name: "Cross-functional navigation", behaviour: "I speak finance, ops, marketing, tech well enough to collaborate." },
+      { id: "exe5", name: "Digital & tool fluency", behaviour: "I am a power user of Excel, PowerPoint, BI tools. I use AI as a thinking partner." },
+    ]
+  },
+  {
+    id: "comms",
+    name: "Communication & Influence",
+    intent: "I move ideas and people. I operate on the page, on the screen, and in the room. I earn the right to be heard by senior audiences.",
+    items: [
+      { id: "com1", name: "Written communication", behaviour: "I write an executive memo under 800 words. I write emails that survive forwarding to senior leaders." },
+      { id: "com2", name: "Visual & slide communication", behaviour: "I build consulting-grade slides that argue, not just inform." },
+      { id: "com3", name: "Spoken communication & presentation", behaviour: "I present confidently to senior audiences. I handle tough questions on my feet." },
+      { id: "com4", name: "Storytelling with data", behaviour: "I frame a number inside a story a leader will remember." },
+      { id: "com5", name: "Stakeholder influence", behaviour: "I read a room. I adapt to each stakeholder's needs. I build networks before they are needed." },
+    ]
+  },
+  {
+    id: "self",
+    name: "Self & Professional Maturity",
+    intent: "I operate as a professional adult. I manage myself, learn continuously, exercise ethical judgement, and own my career direction.",
+    items: [
+      { id: "sel1", name: "Self-awareness & self-management", behaviour: "I know my working strengths, default patterns, triggers. I manage my energy and attention deliberately." },
+      { id: "sel2", name: "Learning agility", behaviour: "I pick up a new domain quickly. I ask better questions over time." },
+      { id: "sel3", name: "Ethical judgement", behaviour: "I recognise ethical dimensions before being told. I articulate where I will and will not bend." },
+      { id: "sel4", name: "Cultural & global fluency", behaviour: "I operate across cultures, generations, hierarchies without losing myself." },
+      { id: "sel5", name: "Resilience & composure", behaviour: "I hold composure under pressure. I recover from setbacks without theatre." },
+      { id: "sel6", name: "Career ownership", behaviour: "I have an articulable point of view on what I want to build. I manage my own development plan." },
+    ]
+  }
+];
+
+// SUBJECT DOMAIN ASSESSMENT (T1, T2, T3) - generic readiness across all six subjects
+const SUBJECT_DOMAINS = {
+  id: "subjects",
+  name: "Subject Domain Readiness",
+  intent: "I assess my readiness across each of the six MBA subject domains. This is not a commitment to a specialization \u2014 it is an honest read on where I currently stand across all of them.",
+  items: [
+    { id: "sub_an", name: "Business Analytics & AI", behaviour: "I can frame an analytical question, read data critically, build a basic model, and use AI tools as a thinking partner." },
+    { id: "sub_fn", name: "Finance", behaviour: "I can read financial statements, build a basic financial model, value an asset, and reason about risk and return." },
+    { id: "sub_hr", name: "Human Resources", behaviour: "I can design recruitment, performance, compensation, and learning systems that align with business strategy." },
+    { id: "sub_mk", name: "Marketing", behaviour: "I can run customer research, segment markets, design positioning, and measure marketing performance." },
+    { id: "sub_op", name: "Lean Operations & Systems", behaviour: "I can map a process, identify waste, design supply chains, and reason about operational excellence." },
+    { id: "sub_ib", name: "International Business", behaviour: "I can analyse global business environments, design market entry strategies, and operate across cultures." },
+  ]
+};
+
+const SPECIALIZATIONS = {
+  analytics: {
+    name: "Business Analytics & AI",
+    intent: "I reason with data and algorithms; I deploy AI judiciously; I treat every model as a means to a business decision, not an end.",
+    items: [
+      { id: "ba1", name: "Translating business to analytics", behaviour: "I convert a vague business problem into a well-defined analytical question with success criteria." },
+      { id: "ba2", name: "Data sourcing & wrangling", behaviour: "I acquire, clean, join, and validate data from messy real-world sources." },
+      { id: "ba3", name: "Statistical reasoning", behaviour: "I know when to use which test; I interpret p-values, confidence intervals, and effect sizes correctly." },
+      { id: "ba4", name: "Machine learning fluency", behaviour: "I build and evaluate supervised and unsupervised models. I reason about bias-variance and overfitting." },
+      { id: "ba5", name: "AI & LLM application", behaviour: "I use generative AI as a productivity and reasoning partner. I know what to verify." },
+      { id: "ba6", name: "Programming fluency (Python / R)", behaviour: "I write clean, reproducible analytical code. I read and improve others' code." },
+      { id: "ba7", name: "SQL & data engineering basics", behaviour: "I query databases independently. I understand how data flows from source to outputs." },
+      { id: "ba8", name: "Data visualisation & storytelling", behaviour: "I build dashboards and visualisations that argue, not just display." },
+      { id: "ba9", name: "Model deployment & MLOps awareness", behaviour: "I understand how a model gets from notebook to production. I reason about monitoring and drift." },
+      { id: "ba10", name: "Analytics ethics & responsible AI", behaviour: "I identify fairness, privacy, and explainability risks. I articulate trade-offs." },
+      { id: "ba11", name: "Domain translation", behaviour: "I bridge the analyst and the business owner. I translate findings into action." },
+      { id: "ba12", name: "Tool ecosystem", behaviour: "I operate competently across Python, R, SQL, Tableau/Power BI, and cloud notebooks." },
+    ]
+  },
+  finance: {
+    name: "Finance",
+    intent: "I allocate and price capital. I read financial statements as stories. I reason about risk, return, and value with rigour and judgement.",
+    items: [
+      { id: "fn1", name: "Financial statement analysis", behaviour: "I read and interrogate P&L, balance sheet, cash flow. I spot accounting choices and what they signal." },
+      { id: "fn2", name: "Corporate valuation", behaviour: "I build DCF, comparables, precedent transactions. I defend discount rate and terminal value." },
+      { id: "fn3", name: "Financial modelling in Excel", behaviour: "I build clean, auditable three-statement models with sensitivity and scenario analysis." },
+      { id: "fn4", name: "Capital markets & instruments", behaviour: "I understand debt, equity, hybrids, derivatives. I read a term sheet and identify what matters." },
+      { id: "fn5", name: "Risk analysis & management", behaviour: "I identify market, credit, operational, liquidity risks. I quantify where possible." },
+      { id: "fn6", name: "Investment thesis construction", behaviour: "I build a structured recommendation: thesis, catalysts, risks, target price, conviction." },
+      { id: "fn7", name: "Indian regulatory landscape", behaviour: "I operate fluently within RBI, SEBI, IRDAI, and IBC frameworks." },
+      { id: "fn8", name: "Corporate finance decisions", behaviour: "I reason about capital structure, dividends, M&A, and capital allocation." },
+      { id: "fn9", name: "Banking & credit", behaviour: "I underwrite credit decisions. I understand NPAs and the Indian banking system." },
+      { id: "fn10", name: "Fintech & financial innovation", behaviour: "I stay current on UPI, account aggregators, embedded finance. I separate hype from shift." },
+      { id: "fn11", name: "Behavioural finance & decision biases", behaviour: "I recognise biases in investors, clients, and myself. I design around them where possible." },
+      { id: "fn12", name: "ESG & sustainable finance", behaviour: "I read BRSR and global ESG frameworks. I understand how sustainability enters valuation." },
+    ]
+  },
+  hr: {
+    name: "Human Resources",
+    intent: "I design people systems that align with strategy. I read culture, behaviour, capability as carefully as finance reads numbers.",
+    items: [
+      { id: "hr1", name: "Strategic HR & business partnership", behaviour: "I link HR initiatives to business strategy. I speak the business's language first." },
+      { id: "hr2", name: "Talent acquisition & assessment", behaviour: "I design recruitment that finds capability, not just credentials. I use structured assessments well." },
+      { id: "hr3", name: "Performance management", behaviour: "I design systems that drive performance without breaking trust." },
+      { id: "hr4", name: "Compensation & rewards design", behaviour: "I design pay structures that are competitive, equitable, defensible. I handle transparency thoughtfully." },
+      { id: "hr5", name: "Learning & development", behaviour: "I design interventions that change behaviour, not just complete modules." },
+      { id: "hr6", name: "Organisation design", behaviour: "I design structures, roles, reporting lines that fit strategy, scale, stage." },
+      { id: "hr7", name: "Employee experience & engagement", behaviour: "I diagnose culture and engagement using data and ethnography." },
+      { id: "hr8", name: "HR analytics & workforce data", behaviour: "I build and read workforce dashboards. I distinguish correlation from causation in people data." },
+      { id: "hr9", name: "Indian labour law & compliance", behaviour: "I operate fluently across Code on Wages, IR Code, Social Security Code, OSH Code." },
+      { id: "hr10", name: "Diversity, equity & inclusion", behaviour: "I design DEI interventions that go beyond representation. I measure outcomes." },
+      { id: "hr11", name: "Industrial relations & negotiation", behaviour: "I manage union and workforce relationships with rigour and respect." },
+      { id: "hr12", name: "HR technology & digital HR", behaviour: "I select and deploy HRMS, ATS, LMS, and people analytics platforms." },
+      { id: "hr13", name: "Ethical practice in HR", behaviour: "I hold the line on confidentiality, conflicts of interest, fairness. I speak truth to power." },
+    ]
+  },
+  marketing: {
+    name: "Marketing",
+    intent: "I see through the customer's eyes. I design offerings, brands, journeys that earn preference, not just attention.",
+    items: [
+      { id: "mk1", name: "Customer & market research", behaviour: "I design and run research that yields actionable insight. I know what customers say versus do." },
+      { id: "mk2", name: "Segmentation, targeting & positioning", behaviour: "I segment meaningfully. I position with clarity, distinctiveness, credibility." },
+      { id: "mk3", name: "Brand strategy & management", behaviour: "I build and steward brands across architecture, expression, stretch." },
+      { id: "mk4", name: "Product & service design", behaviour: "I design offerings using jobs-to-be-done, design thinking, customer co-creation." },
+      { id: "mk5", name: "Pricing strategy", behaviour: "I design pricing using value, cost, competitive lenses. I reason about willingness to pay." },
+      { id: "mk6", name: "Integrated marketing communications", behaviour: "I design campaigns across paid, owned, earned, shared. I brief agencies competently." },
+      { id: "mk7", name: "Digital marketing & performance media", behaviour: "I operate Google Ads, Meta, programmatic. I read attribution, CAC, LTV, ROAS." },
+      { id: "mk8", name: "Content & creative direction", behaviour: "I brief and judge creative work. I distinguish craft from cleverness." },
+      { id: "mk9", name: "Customer experience & journey design", behaviour: "I map end-to-end journeys. I identify moments of truth." },
+      { id: "mk10", name: "Sales & channel management", behaviour: "I reason about distribution, channel partners, salesforce design." },
+      { id: "mk11", name: "Marketing analytics & measurement", behaviour: "I build and read dashboards. I distinguish vanity from outcome metrics." },
+      { id: "mk12", name: "Indian consumer & cultural fluency", behaviour: "I read Indian consumer behaviour across tiers, languages, contexts." },
+      { id: "mk13", name: "Marketing technology stack", behaviour: "I operate across CRM, marketing automation, analytics, content platforms." },
+    ]
+  },
+  operations: {
+    name: "Lean Operations & Systems",
+    intent: "I design and improve systems. I remove waste; I reduce variability; I build in quality. I reason in flow, not in function.",
+    items: [
+      { id: "op1", name: "Operations strategy", behaviour: "I link operations decisions to competitive priorities and business strategy." },
+      { id: "op2", name: "Lean thinking & waste elimination", behaviour: "I see the seven wastes in any process. I apply lean tools with discipline, not ceremony." },
+      { id: "op3", name: "Six Sigma & quality management", behaviour: "I run DMAIC projects with statistical rigour. I reason about variation and control." },
+      { id: "op4", name: "Process design & re-engineering", behaviour: "I map current state honestly. I design future state ambitiously." },
+      { id: "op5", name: "Supply chain design & management", behaviour: "I design networks balancing cost, service, resilience." },
+      { id: "op6", name: "Demand & capacity planning", behaviour: "I forecast demand using appropriate methods. I plan capacity across horizons." },
+      { id: "op7", name: "Project & programme management", behaviour: "I manage complex projects to scope, schedule, cost using appropriate methodologies." },
+      { id: "op8", name: "Operations analytics & data fluency", behaviour: "I build operations dashboards. I am comfortable with simulation, optimisation, forecasting." },
+      { id: "op9", name: "Digital operations & Industry 4.0", behaviour: "I reason about ERP, RPA, IoT, AI, digital twins. I distinguish hype from advantage." },
+      { id: "op10", name: "Sustainability & circular operations", behaviour: "I design operations for environmental, social, economic outcomes. I read CBAM, BRSR." },
+      { id: "op11", name: "Operations excellence frameworks", behaviour: "I operate competently within TPM, TQM, TOC. I know when to apply which." },
+      { id: "op12", name: "Indian manufacturing & services context", behaviour: "I understand India's manufacturing, MSME ecosystem, services economics." },
+      { id: "op13", name: "Operations leadership & change", behaviour: "I lead change on the shop floor and in the office. I build problem-solving capability in others." },
+    ]
+  },
+  ib: {
+    name: "International Business",
+    intent: "I operate across borders, currencies, regulations, cultures. I read the world as a system of interlinked markets.",
+    items: [
+      { id: "ib1", name: "Global business environment", behaviour: "I read geopolitics, trade tensions, macroeconomic forces. I connect shifts to decisions." },
+      { id: "ib2", name: "International trade & policy", behaviour: "I understand WTO, FTAs, tariffs, non-tariff barriers. I reason about commercial implications." },
+      { id: "ib3", name: "Cross-border strategy & market entry", behaviour: "I evaluate entry modes. I build market entry plans grounded in country reality." },
+      { id: "ib4", name: "International finance & FX", behaviour: "I reason about exchange rates, hedging instruments, cross-border capital flows." },
+      { id: "ib5", name: "Global supply chain & logistics", behaviour: "I design and manage international supply chains. I understand incoterms and customs." },
+      { id: "ib6", name: "Cross-cultural management", behaviour: "I read cultural difference using multiple frameworks. I adapt without losing self." },
+      { id: "ib7", name: "International marketing", behaviour: "I adapt marketing to local culture, regulation, channel. I distinguish global from glocal." },
+      { id: "ib8", name: "Global HR & expatriation", behaviour: "I manage international assignments and culturally appropriate HR practices." },
+      { id: "ib9", name: "International law & compliance", behaviour: "I operate around contract law, IP, competition law, anti-bribery across jurisdictions." },
+      { id: "ib10", name: "Country & political risk", behaviour: "I assess country risk across political, economic, operational dimensions." },
+      { id: "ib11", name: "Global negotiation", behaviour: "I negotiate across cultures and time zones. I read what is being said and signalled." },
+      { id: "ib12", name: "Emerging markets & India's global role", behaviour: "I understand India as both domestic market and global player. I read BRICS, Indo-Pacific positioning." },
+      { id: "ib13", name: "ESG & global sustainability", behaviour: "I read CBAM, EU CSRD, global ESG frameworks. I reason about cross-border obligations." },
+    ]
+  }
+};
+
+const LIKERT_LABELS = [
+  { num: 1, label: "Not yet" },
+  { num: 2, label: "Emerging" },
+  { num: 3, label: "Developing" },
+  { num: 4, label: "Capable" },
+  { num: 5, label: "Strong" },
+];
+
+const TRIMESTER_LABELS = {
+  "1": "Start of Trimester 1",
+  "2": "Start of Trimester 2",
+  "3": "Start of Trimester 3",
+  "4": "Start of Trimester 4",
+  "5": "Start of Trimester 5",
+  "6": "Start of Trimester 6",
+  "7": "End of Trimester 6 \u2014 Final Exit",
+};
+
+// ============================================================
+// TRIMESTER LOGIC
+// ============================================================
+const usesSubjects = (t) => ["1", "2", "3"].includes(t);
+const usesSpecialization = (t) => ["4", "5", "6", "7"].includes(t);
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  user: { name: "", roll: "", spec: "", trimester: "" },
+  currentDomain: 0,
+  domains: [],
+  responses: {},
+  history: [], // array of past attempts: { date, trimester, spec, responses, domainScores, type }
+};
+
+// ============================================================
+// HELPERS
+// ============================================================
+const $ = (id) => document.getElementById(id);
+const showScreen = (id) => {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+const updateProgress = (pct) => { $('progressFill').style.width = pct + '%'; };
+const totalItems = () => state.domains.reduce((sum, d) => sum + d.items.length, 0);
+const answeredItems = () => Object.values(state.responses).filter(r => r.rating).length;
+
+// localStorage helpers (silently fail if unavailable)
+const LS_KEY = 'sbm_capability_history';
+const saveToLocalStorage = () => {
+  try {
+    const data = { user: { name: state.user.name, roll: state.user.roll, spec: state.user.spec }, history: state.history };
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
+  } catch (e) { /* silent */ }
+};
+const loadFromLocalStorage = () => {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data.user && data.history) {
+        if (data.user.name) state.user.name = data.user.name;
+        if (data.user.roll) state.user.roll = data.user.roll;
+        if (data.user.spec) state.user.spec = data.user.spec;
+        state.history = data.history || [];
+        return true;
+      }
+    }
+  } catch (e) { /* silent */ }
+  return false;
+};
+
+// ============================================================
+// TRIMESTER INFO & FORM LOGIC
+// ============================================================
+const renderTrimesterInfo = () => {
+  const t = $('inputTrimester').value;
+  const wrapper = $('trimesterInfo');
+  const specWrap = $('specWrapper');
+
+  if (!t) {
+    wrapper.innerHTML = '';
+    specWrap.style.display = 'none';
+    return;
+  }
+
+  if (usesSubjects(t)) {
+    wrapper.innerHTML = `<div class="trimester-info"><strong>Assessment scope:</strong> Five core domains plus a subject domain readiness check across all six MBA subjects (Business Analytics &amp; AI, Finance, HR, Marketing, Lean Operations &amp; Systems, International Business). This helps me see where I stand before I commit to a specialization in Trimester 4.</div>`;
+    specWrap.style.display = 'none';
+    $('inputSpec').value = '';
+  } else {
+    wrapper.innerHTML = `<div class="trimester-info"><strong>Assessment scope:</strong> Five core domains plus deep self-rating across the 12&ndash;13 sub-capabilities of my chosen specialization.${t === "7" ? ' This is my <strong>final exit assessment</strong> at the end of my MBA \u2014 the most important one I will take.' : ''}</div>`;
+    specWrap.style.display = 'block';
+    if (state.user.spec) $('inputSpec').value = state.user.spec;
+  }
+  checkWelcomeForm();
+};
+
+const checkWelcomeForm = () => {
+  const n = $('inputName').value.trim();
+  const r = $('inputRoll').value.trim();
+  const t = $('inputTrimester').value;
+  const s = $('inputSpec').value;
+  const needsSpec = usesSpecialization(t);
+  const ok = n && r && t && (!needsSpec || s);
+  $('btnStart').disabled = !ok;
+};
+
+['inputName', 'inputRoll'].forEach(id => {
+  $(id).addEventListener('input', checkWelcomeForm);
+});
+$('inputSpec').addEventListener('change', checkWelcomeForm);
+$('inputTrimester').addEventListener('change', renderTrimesterInfo);
+
+const refreshHistoryStatus = () => {
+  if (state.history.length > 0) {
+    const dates = state.history.map(h => h.trimester);
+    $('historyStatus').innerHTML = `&#x2714; History loaded &middot; ${state.history.length} previous attempt${state.history.length > 1 ? 's' : ''} (${dates.map(d => 'T' + d).join(', ')})`;
+  } else {
+    $('historyStatus').innerHTML = `No previous attempts loaded. <button class="topbar-btn" id="quickImport" style="margin-left: 8px;">Import History</button>`;
+    const qi = $('quickImport');
+    if (qi) qi.addEventListener('click', () => $('importModal').classList.add('show'));
+  }
+};
+
+// On load, try to fill from localStorage
+window.addEventListener('DOMContentLoaded', () => {
+  const loaded = loadFromLocalStorage();
+  if (loaded) {
+    if (state.user.name) $('inputName').value = state.user.name;
+    if (state.user.roll) $('inputRoll').value = state.user.roll;
+  }
+  refreshHistoryStatus();
+  checkWelcomeForm();
+  updateProgress(0);
+});
+
+// ============================================================
+// IMPORT MODAL
+// ============================================================
+$('topImport').addEventListener('click', () => $('importModal').classList.add('show'));
+$('btnCancelImport').addEventListener('click', () => $('importModal').classList.remove('show'));
+$('btnPickFile').addEventListener('click', () => $('fileInput').click());
+$('fileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.user && data.history) {
+        if (data.user.name && !state.user.name) state.user.name = data.user.name;
+        if (data.user.roll && !state.user.roll) state.user.roll = data.user.roll;
+        if (data.user.spec && !state.user.spec) state.user.spec = data.user.spec;
+        state.history = data.history || [];
+        $('inputName').value = state.user.name || '';
+        $('inputRoll').value = state.user.roll || '';
+        saveToLocalStorage();
+        refreshHistoryStatus();
+        $('importModal').classList.remove('show');
+        alert(`History imported successfully. ${state.history.length} previous attempt${state.history.length > 1 ? 's' : ''} loaded.`);
+      } else {
+        alert('This does not look like a valid SBM Capability assessment export.');
+      }
+    } catch (err) {
+      alert('Could not read this file. Please make sure it is the .json file exported from a previous assessment.');
+    }
+  };
+  reader.readAsText(file);
+});
+
+// ============================================================
+// START ASSESSMENT
+// ============================================================
+$('btnStart').addEventListener('click', () => {
+  state.user.name = $('inputName').value.trim();
+  state.user.roll = $('inputRoll').value.trim();
+  state.user.trimester = $('inputTrimester').value;
+  state.user.spec = $('inputSpec').value;
+
+  // Build domain list based on trimester
+  const t = state.user.trimester;
+  if (usesSubjects(t)) {
+    state.domains = [...CORE_DOMAINS, SUBJECT_DOMAINS];
+  } else {
+    state.domains = [...CORE_DOMAINS, {
+      id: "specialization",
+      name: SPECIALIZATIONS[state.user.spec].name,
+      intent: SPECIALIZATIONS[state.user.spec].intent,
+      items: SPECIALIZATIONS[state.user.spec].items,
+      isSpec: true,
+    }];
+  }
+
+  state.currentDomain = 0;
+  state.responses = {};
+  saveToLocalStorage();
+  showScreen('screen-assess');
+  renderAssessment();
+});
+
+// ============================================================
+// RENDER ASSESSMENT
+// ============================================================
+const renderAssessment = () => {
+  const domain = state.domains[state.currentDomain];
+  const totalDomains = state.domains.length;
+  const isLastDomain = state.currentDomain === totalDomains - 1;
+  const isSubjects = domain.id === "subjects";
+
+  let label;
+  if (isSubjects) label = "Subject Domain Readiness";
+  else if (domain.isSpec) label = "Specialization Domain";
+  else label = `Core Domain ${state.currentDomain + 1} of 5`;
+
+  const html = `
+    <div class="domain-intro">
+      <div class="domain-intro-eyebrow">${label}</div>
+      <h2 class="domain-intro-title">${(domain.isSpec || isSubjects) ? '<em>' + domain.name + '</em>' : domain.name}</h2>
+      <p class="domain-intro-desc">${domain.intent}</p>
+    </div>
+
+    <div class="assess-header">
+      <div>
+        <div class="assess-domain-label">I rate each capability honestly</div>
+        <div class="assess-domain-title">How would I <em>honestly</em> rate myself today?</div>
+      </div>
+      <div class="assess-counter">
+        <strong>${state.currentDomain + 1} / ${totalDomains}</strong>
+        Domain
+      </div>
+    </div>
+
+    <p class="assess-intent">I rate myself the way a recruiter would after seeing my portfolio &mdash; not the way I wish I could be rated. The point is to find my gaps, not to feel good.</p>
+
+    ${domain.items.map((item, idx) => {
+      const resp = state.responses[item.id] || {};
+      const answered = resp.rating ? 'answered' : '';
+      return `
+        <div class="cap-card ${answered}" data-item-id="${item.id}">
+          <span class="cap-card-tag">${String(idx + 1).padStart(2, '0')}</span>
+          <h3 class="cap-title">${item.name}</h3>
+          <p class="cap-behaviours">${item.behaviour}</p>
+          <div class="likert" data-item="${item.id}">
+            ${LIKERT_LABELS.map(l => `
+              <div class="likert-option ${resp.rating === l.num ? 'selected' : ''}" data-rating="${l.num}">
+                <div class="likert-num">${l.num}</div>
+                <div class="likert-label">${l.label}</div>
+              </div>
+            `).join('')}
+          </div>
+          <button class="reflect-toggle" data-toggle="${item.id}">
+            ${resp.reflection ? '\u2713 Edit my reflection' : '+ Add my reflection (optional)'}
+          </button>
+          <div class="reflect-area ${resp.reflection ? 'show' : ''}" data-area="${item.id}">
+            <div class="reflect-prompt">I have demonstrated this when&hellip; / I find this challenging because&hellip;</div>
+            <textarea data-reflection="${item.id}" placeholder="I write here in my own words. One paragraph. The evidence matters more than the score.">${resp.reflection || ''}</textarea>
+          </div>
+        </div>
+      `;
+    }).join('')}
+  `;
+
+  $('assessContent').innerHTML = html;
+
+  document.querySelectorAll('.likert-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const itemId = opt.parentElement.dataset.item;
+      const rating = parseInt(opt.dataset.rating);
+      if (!state.responses[itemId]) state.responses[itemId] = {};
+      state.responses[itemId].rating = rating;
+      opt.parentElement.querySelectorAll('.likert-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      opt.closest('.cap-card').classList.add('answered');
+      updateProgress((answeredItems() / totalItems()) * 100);
+    });
+  });
+
+  document.querySelectorAll('.reflect-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.toggle;
+      const area = document.querySelector(`[data-area="${id}"]`);
+      area.classList.toggle('show');
+      if (area.classList.contains('show')) area.querySelector('textarea').focus();
+    });
+  });
+
+  document.querySelectorAll('[data-reflection]').forEach(ta => {
+    ta.addEventListener('input', () => {
+      const itemId = ta.dataset.reflection;
+      if (!state.responses[itemId]) state.responses[itemId] = {};
+      state.responses[itemId].reflection = ta.value;
+    });
+  });
+
+  $('btnPrev').style.visibility = state.currentDomain === 0 ? 'hidden' : 'visible';
+  $('btnNext').innerHTML = isLastDomain ? 'See My Results' : 'Next Domain';
+  updateProgress((answeredItems() / totalItems()) * 100);
+  $('topbarMeta').textContent = `Domain ${state.currentDomain + 1} of ${totalDomains}`;
+};
+
+$('btnPrev').addEventListener('click', () => {
+  if (state.currentDomain > 0) { state.currentDomain--; renderAssessment(); }
+});
+$('btnNext').addEventListener('click', () => {
+  const domain = state.domains[state.currentDomain];
+  const unanswered = domain.items.filter(item => !state.responses[item.id]?.rating);
+  if (unanswered.length > 0) {
+    if (!confirm(`I have ${unanswered.length} unanswered item${unanswered.length > 1 ? 's' : ''} in this domain. Continue anyway?`)) return;
+  }
+  if (state.currentDomain < state.domains.length - 1) {
+    state.currentDomain++;
+    renderAssessment();
+  } else {
+    saveCurrentAttempt();
+    showResults();
+  }
+});
+
+// ============================================================
+// SAVE CURRENT ATTEMPT TO HISTORY
+// ============================================================
+const computeDomainScores = () => state.domains.map(d => {
+  const ratings = d.items.map(i => state.responses[i.id]?.rating || 0).filter(r => r > 0);
+  const avg = ratings.length ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+  return { id: d.id, name: d.name, score: avg, items: d.items, isSpec: d.isSpec };
+});
+
+const saveCurrentAttempt = () => {
+  const domainScores = computeDomainScores();
+  // Remove any prior attempt for the same trimester (so re-takes overwrite)
+  state.history = state.history.filter(h => h.trimester !== state.user.trimester);
+  state.history.push({
+    date: new Date().toISOString(),
+    trimester: state.user.trimester,
+    spec: state.user.spec || null,
+    type: usesSubjects(state.user.trimester) ? "subjects" : "specialization",
+    responses: { ...state.responses },
+    domainScores: domainScores.map(d => ({ id: d.id, name: d.name, score: d.score, isSpec: !!d.isSpec })),
+  });
+  // Sort by trimester
+  state.history.sort((a, b) => parseInt(a.trimester) - parseInt(b.trimester));
+  saveToLocalStorage();
+};
+
+// ============================================================
+// RESULTS
+// ============================================================
+const showResults = () => {
+  const domainScores = computeDomainScores();
+
+  // Header meta
+  $('resName').textContent = state.user.name;
+  $('resTrim').textContent = TRIMESTER_LABELS[state.user.trimester];
+  $('resDate').textContent = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+  $('resAttempts').textContent = state.history.length;
+  if (state.user.spec) {
+    $('resSpecBlock').style.display = '';
+    $('resSpec').textContent = SPECIALIZATIONS[state.user.spec].name;
+  } else {
+    $('resSpecBlock').style.display = 'none';
+  }
+  $('resultsEyebrow').textContent = `My Capability Portfolio · ${TRIMESTER_LABELS[state.user.trimester]}`;
+
+  drawRadar(domainScores);
+
+  // Find prior attempt for delta
+  const priorAttempts = state.history.filter(h => parseInt(h.trimester) < parseInt(state.user.trimester));
+  const lastPrior = priorAttempts.length ? priorAttempts[priorAttempts.length - 1] : null;
+  const priorScoreById = {};
+  if (lastPrior) lastPrior.domainScores.forEach(d => { priorScoreById[d.id] = d.score; });
+
+  // Scores list
+  $('scoresList').innerHTML = domainScores.map(d => {
+    const pct = (d.score / 5) * 100;
+    const cls = d.score >= 4 ? 'strong' : d.score < 3 ? 'weak' : '';
+    const prior = priorScoreById[d.id];
+    let delta = '';
+    if (prior !== undefined && prior > 0) {
+      const diff = d.score - prior;
+      if (Math.abs(diff) < 0.05) {
+        delta = `<div class="score-delta same">\u2192 No change from T${lastPrior.trimester}</div>`;
+      } else if (diff > 0) {
+        delta = `<div class="score-delta up">\u2191 +${diff.toFixed(1)} from T${lastPrior.trimester}</div>`;
+      } else {
+        delta = `<div class="score-delta down">\u2193 ${diff.toFixed(1)} from T${lastPrior.trimester}</div>`;
+      }
+    }
+    return `
+      <div class="score-row ${cls}">
+        <div>
+          <div class="score-name">${d.name}${d.isSpec ? ' <span style="color: var(--gold); font-family: \'JetBrains Mono\', monospace; font-size: 0.65rem; letter-spacing: 0.15em; margin-left: 8px;">SPECIALIZATION</span>' : ''}${d.id === 'subjects' ? ' <span style="color: var(--gold); font-family: \'JetBrains Mono\', monospace; font-size: 0.65rem; letter-spacing: 0.15em; margin-left: 8px;">SUBJECTS</span>' : ''}</div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width: ${pct}%;"></div></div>
+          ${delta}
+        </div>
+        <div class="score-value">${d.score.toFixed(1)}<span class="total">/5</span></div>
+      </div>
+    `;
+  }).join('');
+
+  // Longitudinal section
+  renderLongitudinal();
+
+  // Strengths and gaps
+  const allItems = state.domains.flatMap(d => d.items.map(i => ({
+    ...i, domain: d.name, rating: state.responses[i.id]?.rating || 0,
+  }))).filter(i => i.rating > 0);
+
+  const topStrengths = [...allItems].sort((a, b) => b.rating - a.rating).slice(0, 4);
+  const topGaps = [...allItems].sort((a, b) => a.rating - b.rating).slice(0, 4);
+
+  $('strengthsTitle').textContent = `I rate myself most confidently on these ${topStrengths.length}.`;
+  $('strengthsList').innerHTML = topStrengths.map(s => `
+    <li><strong>${s.name}</strong> &middot; ${s.domain} <span style="color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">&middot; ${s.rating}/5</span><br>
+    <span style="color: var(--muted); font-size: 0.9rem;">${s.behaviour}</span></li>
+  `).join('');
+
+  $('gapsTitle').textContent = `The ${topGaps.length} capabilities I most need to work on next.`;
+  $('gapsList').innerHTML = topGaps.map(g => `
+    <li><strong>${g.name}</strong> &middot; ${g.domain} <span style="color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">&middot; ${g.rating}/5</span><br>
+    <span style="color: var(--muted); font-size: 0.9rem;">${g.behaviour}</span></li>
+  `).join('');
+
+  // Next steps
+  const weakestDomain = [...domainScores].sort((a, b) => a.score - b.score)[0];
+  const weakestItem = topGaps[0];
+  const isExit = state.user.trimester === "7";
+
+  let stepsHTML;
+  if (isExit) {
+    stepsHTML = `
+      <div class="step-card">
+        <div class="step-num">Move 01</div>
+        <div class="step-title">Carry these gaps into my first job</div>
+        <div class="step-desc">My weakest capability today is <strong>${weakestItem?.name || '\u2014'}</strong>. I will make this my first 90-day learning agenda once I join.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 02</div>
+        <div class="step-title">Curate my final portfolio</div>
+        <div class="step-desc">From every artifact I have built across these capabilities, I select the 8\u201310 strongest for the portfolio I show recruiters and lifelong professional contacts.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 03</div>
+        <div class="step-title">Share my exit assessment with my mentor</div>
+        <div class="step-desc">I share this final report with my faculty mentor and at least one trusted senior. The conversation about my gaps is more important than the document.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 04</div>
+        <div class="step-title">Plan a 12-month re-assessment</div>
+        <div class="step-desc">I will re-take this self-assessment one year into my career. The movement between my MBA exit and Year 1 of work tells me which capabilities the workplace actually develops.</div>
+      </div>
+    `;
+  } else {
+    stepsHTML = `
+      <div class="step-card">
+        <div class="step-num">Move 01</div>
+        <div class="step-title">I pick one gap to close this trimester</div>
+        <div class="step-desc">I start with <strong>${weakestItem?.name || 'my weakest capability'}</strong>. I identify the course, project, or workshop that develops it. I commit to one artifact by trimester end.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 02</div>
+        <div class="step-title">I build evidence for my portfolio</div>
+        <div class="step-desc">For ${topStrengths.length > 0 ? topStrengths[0].name.toLowerCase() : 'my strongest capability'}, I produce a polished artifact I would show a recruiter without apology.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 03</div>
+        <div class="step-title">I find a mentor for ${weakestDomain.name}</div>
+        <div class="step-desc">My scores suggest <strong>${weakestDomain.name}</strong> needs deliberate work. I identify the faculty member who teaches it best and ask for guidance on one artifact.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Move 04</div>
+        <div class="step-title">I retake this at the start of T${parseInt(state.user.trimester) + 1}</div>
+        <div class="step-desc">This is a self-assessment. I retake it at the start of my next trimester. The movement in my scores is the real signal &mdash; not the absolute number.</div>
+      </div>
+    `;
+  }
+  $('nextSteps').innerHTML = stepsHTML;
+
+  updateProgress(100);
+  $('topbarMeta').textContent = 'Assessment complete';
+  showScreen('screen-results');
+};
+
+// ============================================================
+// LONGITUDINAL VIEW
+// ============================================================
+const renderLongitudinal = () => {
+  const content = $('longContent');
+  if (state.history.length <= 1) {
+    content.innerHTML = `<div class="empty-history">This is my first attempt. After my next trimester, I will see how my scores have moved &mdash; one line per core domain across trimesters.</div>`;
+    return;
+  }
+
+  // Build chart
+  const trimesters = state.history.map(h => parseInt(h.trimester)).sort((a, b) => a - b);
+  const tMin = Math.min(...trimesters);
+  const tMax = Math.max(...trimesters);
+  const padding = { top: 40, right: 40, bottom: 60, left: 50 };
+  const W = 800, H = 360;
+  const innerW = W - padding.left - padding.right;
+  const innerH = H - padding.top - padding.bottom;
+
+  // X-axis: trimesters
+  const xPos = (t) => padding.left + ((t - tMin) / Math.max(tMax - tMin, 1)) * innerW;
+  // Y-axis: score 0-5
+  const yPos = (s) => padding.top + innerH - (s / 5) * innerH;
+
+  // Core domain colours
+  const domainColours = {
+    acumen: "#1f2a44",
+    analytical: "#b08d3f",
+    execution: "#4a7c3a",
+    comms: "#c14a3a",
+    self: "#6b6357",
+    subjects: "#9b59b6",
+    specialization: "#2d5d5d",
+  };
+
+  // For each core domain (plus subjects/spec as one line each), trace score over time
+  // Collect distinct domain IDs across history
+  const domainIds = new Set();
+  state.history.forEach(h => h.domainScores.forEach(d => domainIds.add(d.id)));
+
+  // Track current line for special "subjects/specialization" - we render specialization line distinctly only if multiple specialization trimesters exist
+  let svg = '';
+
+  // Background grid + y-axis labels
+  for (let s = 0; s <= 5; s++) {
+    const y = yPos(s);
+    svg += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="#d9d2c2" stroke-width="0.8" stroke-dasharray="${s === 0 ? 'none' : '3,3'}" />`;
+    svg += `<text x="${padding.left - 10}" y="${y + 4}" font-family="JetBrains Mono" font-size="11" fill="#6b6357" text-anchor="end">${s}</text>`;
+  }
+
+  // X-axis ticks
+  for (let t = tMin; t <= tMax; t++) {
+    if (!trimesters.includes(t)) continue;
+    const x = xPos(t);
+    svg += `<line x1="${x}" y1="${padding.top + innerH}" x2="${x}" y2="${padding.top + innerH + 5}" stroke="#6b6357" stroke-width="0.8" />`;
+    const lbl = t === 7 ? "Exit" : `T${t}`;
+    svg += `<text x="${x}" y="${padding.top + innerH + 22}" font-family="JetBrains Mono" font-size="11" fill="#1f2a44" text-anchor="middle" font-weight="600">${lbl}</text>`;
+  }
+
+  // Plot each domain
+  const legend = [];
+  domainIds.forEach(domId => {
+    const points = [];
+    state.history.forEach(h => {
+      const d = h.domainScores.find(d => d.id === domId);
+      if (d && d.score > 0) {
+        points.push({ t: parseInt(h.trimester), score: d.score, name: d.name });
+      }
+    });
+    if (points.length < 1) return;
+    points.sort((a, b) => a.t - b.t);
+    const colour = domainColours[domId] || "#888";
+    const name = points[0].name;
+    legend.push({ name, colour, id: domId });
+
+    if (points.length === 1) {
+      // single dot
+      svg += `<circle cx="${xPos(points[0].t)}" cy="${yPos(points[0].score)}" r="5" fill="${colour}" stroke="#f4efe6" stroke-width="2" />`;
+    } else {
+      const path = points.map((p, i) =>
+        (i === 0 ? "M" : "L") + xPos(p.t) + "," + yPos(p.score)
+      ).join(" ");
+      svg += `<path d="${path}" fill="none" stroke="${colour}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />`;
+      points.forEach(p => {
+        svg += `<circle cx="${xPos(p.t)}" cy="${yPos(p.score)}" r="4" fill="${colour}" stroke="#f4efe6" stroke-width="2" />`;
+      });
+    }
+  });
+
+  // Y-axis label
+  svg += `<text x="20" y="${padding.top - 10}" font-family="JetBrains Mono" font-size="10" fill="#6b6357" letter-spacing="0.1em">SCORE</text>`;
+  svg += `<text x="${W / 2}" y="${H - 10}" font-family="JetBrains Mono" font-size="10" fill="#6b6357" letter-spacing="0.15em" text-anchor="middle">MY TRIMESTER PROGRESSION</text>`;
+
+  const legendHTML = legend.map(l =>
+    `<div class="legend-item"><div class="legend-swatch" style="background: ${l.colour};"></div>${l.name}</div>`
+  ).join('');
+
+  // History table
+  // Build a table: rows are domains, columns are trimesters
+  const allDomainIds = Array.from(domainIds);
+  const tableRows = allDomainIds.map(id => {
+    let name = '';
+    state.history.forEach(h => {
+      const d = h.domainScores.find(d => d.id === id);
+      if (d && !name) name = d.name;
+    });
+    const cells = state.history.map(h => {
+      const d = h.domainScores.find(d => d.id === id);
+      if (!d || d.score === 0) return `<td class="score-cell">&mdash;</td>`;
+      const colour = d.score >= 4 ? 'var(--green)' : d.score < 3 ? 'var(--red)' : 'var(--ink)';
+      return `<td class="score-cell" style="color: ${colour};">${d.score.toFixed(1)}</td>`;
+    }).join('');
+    return `<tr><td class="domain-cell">${name}</td>${cells}</tr>`;
+  }).join('');
+
+  const headerCells = state.history.map(h => {
+    const lbl = h.trimester === "7" ? "Exit" : `T${h.trimester}`;
+    return `<th style="text-align: center;">${lbl}</th>`;
+  }).join('');
+
+  content.innerHTML = `
+    <div class="timeline-chart">
+      <div class="timeline-chart-label">My capability scores across trimesters</div>
+      <svg class="timeline-svg" viewBox="0 0 800 360" preserveAspectRatio="xMidYMid meet">${svg}</svg>
+      <div class="timeline-legend">${legendHTML}</div>
+    </div>
+    <div class="history-table">
+      <table>
+        <thead>
+          <tr><th>Domain</th>${headerCells}</tr>
+        </thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>
+  `;
+};
+
+// ============================================================
+// RADAR
+// ============================================================
+const drawRadar = (domainScores) => {
+  const svg = $('radarSvg');
+  const cx = 250, cy = 250, maxR = 175;
+  const n = domainScores.length;
+  const angleStep = (Math.PI * 2) / n;
+  let html = '';
+
+  for (let level = 1; level <= 5; level++) {
+    const r = (level / 5) * maxR;
+    const points = [];
+    for (let i = 0; i < n; i++) {
+      const a = -Math.PI / 2 + i * angleStep;
+      points.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+    }
+    html += `<polygon points="${points.join(' ')}" fill="none" stroke="#d9d2c2" stroke-width="0.8" stroke-dasharray="${level === 5 ? 'none' : '3,3'}" />`;
+    if (level < 5) html += `<text x="${cx + 4}" y="${cy - r + 4}" font-family="JetBrains Mono" font-size="9" fill="#a0998a">${level}</text>`;
+  }
+
+  for (let i = 0; i < n; i++) {
+    const a = -Math.PI / 2 + i * angleStep;
+    const x2 = cx + maxR * Math.cos(a), y2 = cy + maxR * Math.sin(a);
+    html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#d9d2c2" stroke-width="0.8" />`;
+  }
+
+  const dataPoints = domainScores.map((d, i) => {
+    const a = -Math.PI / 2 + i * angleStep;
+    const r = (d.score / 5) * maxR;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+  });
+  const polyPoints = dataPoints.map(p => `${p.x},${p.y}`).join(' ');
+  html += `<polygon points="${polyPoints}" fill="rgba(176, 141, 63, 0.18)" stroke="#b08d3f" stroke-width="2" />`;
+  dataPoints.forEach(p => {
+    html += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#b08d3f" stroke="#f4efe6" stroke-width="2" />`;
+  });
+
+  domainScores.forEach((d, i) => {
+    const a = -Math.PI / 2 + i * angleStep;
+    const labelR = maxR + 30;
+    let lx = cx + labelR * Math.cos(a), ly = cy + labelR * Math.sin(a);
+    let anchor = 'middle';
+    if (Math.cos(a) > 0.3) anchor = 'start';
+    else if (Math.cos(a) < -0.3) anchor = 'end';
+
+    const words = d.name.split(' ');
+    let l1 = '', l2 = '';
+    if (words.length > 2) {
+      const mid = Math.ceil(words.length / 2);
+      l1 = words.slice(0, mid).join(' ');
+      l2 = words.slice(mid).join(' ');
+    } else l1 = d.name;
+
+    html += `<text x="${lx}" y="${ly}" font-family="Fraunces" font-size="13" fill="#1f2a44" text-anchor="${anchor}" font-weight="500">${l1}`;
+    if (l2) html += `<tspan x="${lx}" dy="14" font-family="Fraunces" font-size="13" fill="#1f2a44">${l2}</tspan>`;
+    html += `</text>`;
+    html += `<text x="${lx}" y="${ly + (l2 ? 30 : 16)}" font-family="JetBrains Mono" font-size="11" fill="#b08d3f" text-anchor="${anchor}" font-weight="600">${d.score.toFixed(1)}/5</text>`;
+  });
+
+  svg.innerHTML = html;
+};
+
+// ============================================================
+// EXPORT, PRINT, RESTART
+// ============================================================
+$('btnExport').addEventListener('click', () => {
+  const data = {
+    schema: "sbm_capability_v2",
+    exportedAt: new Date().toISOString(),
+    user: { name: state.user.name, roll: state.user.roll, spec: state.user.spec },
+    history: state.history,
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = (state.user.name || 'student').replace(/[^a-zA-Z0-9]+/g, '-');
+  a.href = url;
+  a.download = `SBM-Capability-History-${safeName}-T${state.user.trimester}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+$('btnPrint').addEventListener('click', () => window.print());
+
+$('btnRestart').addEventListener('click', () => {
+  if (confirm('Start over? My current attempt will be cleared, but my saved history will be kept.')) {
+    state.user.trimester = '';
+    state.user.spec = '';
+    state.responses = {};
+    state.currentDomain = 0;
+    state.domains = [];
+    $('inputTrimester').value = '';
+    $('inputSpec').value = '';
+    renderTrimesterInfo();
+    checkWelcomeForm();
+    updateProgress(0);
+    $('topbarMeta').textContent = 'v2.0 · Working Draft';
+    showScreen('screen-welcome');
+  }
+});
+</script>
+
+</body>
+</html>
